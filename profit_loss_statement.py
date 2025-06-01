@@ -381,7 +381,7 @@ class BudgetCarouselApp:
             budget_values,
             bar_width,
             label="予算",
-            color="lightcoral",
+            color="#0044FF",
         )
 
         # --- 凡例を修正 ---
@@ -390,7 +390,7 @@ class BudgetCarouselApp:
         legend_elements = [
             plt.Line2D([0], [0], color="#4CAF50", lw=4, label="実績（固定費）"),
             plt.Line2D([0], [0], color="#FF5722", lw=4, label="実績（変動費）"),
-            plt.Line2D([0], [0], color="lightcoral", lw=4, label="予算"),
+            plt.Line2D([0], [0], color="#0044FF", lw=4, label="予算"),
         ]
         # ax.legend(handles=legend_elements, title='凡例', bbox_to_anchor=(1.05, 1), loc='upper left')
         ax.legend(
