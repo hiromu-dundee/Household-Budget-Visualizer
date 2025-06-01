@@ -336,7 +336,7 @@ class BudgetCarouselApp:
         self.btn_circle.config(state=tk.NORMAL)
         self.btn_expense.config(state=tk.NORMAL)
         # self.btn_write.config(state=tk.NORMAL)
-        # self.btn_category_trends.config(state=tk.NORMAL) # ★ 新しいボタンを有効化
+        # self.btn_category_trends.config(state=tk.NORMAL)  # ★ 新しいボタンを有効化
 
     def draw_plot(self):
         for widget in self.frame_plot.winfo_children():
