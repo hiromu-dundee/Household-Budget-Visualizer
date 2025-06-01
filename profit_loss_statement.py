@@ -125,46 +125,6 @@ class BudgetCarouselApp:
         )
         self.label_warning.pack(side=tk.LEFT, padx=10)
 
-        # # --- データ入力と書き込み部分 ---
-        # # ここに self.frame_input の定義を移動します
-        # self.frame_input = tk.LabelFrame(root, text="新しい支出の追加") # ラベルフレームで囲む
-        # self.frame_input.pack(pady=10, padx=10, fill=tk.X)
-
-        # # 入力フィールドのラベルとエントリー
-        # tk.Label(self.frame_input, text="日付 (YYYY-MM-DD):").grid(row=0, column=0, padx=5, pady=2, sticky="w")
-        # self.entry_date = tk.Entry(self.frame_input, width=20)
-        # self.entry_date.grid(row=0, column=1, padx=5, pady=2, sticky="ew")
-
-        # tk.Label(self.frame_input, text="値段:").grid(row=1, column=0, padx=5, pady=2, sticky="w")
-        # self.entry_price = tk.Entry(self.frame_input, width=20)
-        # self.entry_price.grid(row=1, column=1, padx=5, pady=2, sticky="ew")
-
-        # tk.Label(self.frame_input, text="物品:").grid(row=2, column=0, padx=5, pady=2, sticky="w")
-        # self.entry_item = tk.Entry(self.frame_input, width=20)
-        # self.entry_item.grid(row=2, column=1, padx=5, pady=2, sticky="ew")
-
-        # tk.Label(self.frame_input, text="カテゴリ:").grid(row=3, column=0, padx=5, pady=2, sticky="w")
-        # self.entry_category = tk.Entry(self.frame_input, width=20)
-        # self.entry_category.grid(row=3, column=1, padx=5, pady=2, sticky="ew")
-
-        # self.selected_input_category = tk.StringVar(self.frame_input)
-        # self.selected_input_category.set("カテゴリを選択") # 初期表示テキスト
-        # self.category_options_menu = tk.OptionMenu(
-        #     self.frame_input,
-        #     self.selected_input_category,
-        #     "カテゴリを選択", # 最初のダミーオプション
-        #     command=self._on_category_select # 選択時のコールバック
-        # )
-        # self.category_options_menu.config(width=15) # 幅を調整
-        # self.category_options_menu.grid(row=3, column=2, padx=5, pady=2, sticky="w")
-
-        # tk.Label(self.frame_input, text="備考:").grid(row=4, column=0, padx=5, pady=2, sticky="w")
-        # self.entry_notes = tk.Entry(self.frame_input, width=20)
-        # self.entry_notes.grid(row=4, column=1, padx=5, pady=2, sticky="ew")
-
-        # self.btn_write = tk.Button(self.frame_input, text="データを書き込む", command=self.write_data_to_csv, state=tk.DISABLED)
-        # self.btn_write.grid(row=5, column=0, columnspan=2, pady=5)
-
         # --- 検索機能のUIを追加 (重複部分を削除し、適切な位置に配置) ---
         self.frame_search = tk.Frame(self.root)  # self.root を指定
         self.frame_search.pack(pady=10)
@@ -273,12 +233,6 @@ class BudgetCarouselApp:
             print("読み込むデータがありませんでした。")
             return
 
-        # データ整理
-        # for year in money_data:
-        #     for month in money_data[year]:
-        #         for category in money_data[year][month]:
-        #             money_data[year][month][category] = sum(money_data[year][month][category])
-
         all_categories = sorted(
             set(
                 c
@@ -347,20 +301,10 @@ class BudgetCarouselApp:
         self.current_index = 0
         self.btn_circle.config(state=tk.NORMAL)
         # self.btn_write.config(state=tk.NORMAL)
-        self.btn_toggle_day.config(state=tk.NORMAL)  # aaaaaaaaaaaaaaaaaaaaaa
+        self.btn_toggle_day.config(state=tk.NORMAL)
         self.btn_expense.config(state=tk.NORMAL)
         self.update_buttons()
         self.draw_plot()
-
-        # # 月別データ準備
-        # self.data_by_month = []
-        # self.month_labels = []
-        # all_categories = sorted(list(set(
-        #     c for y_data in money_data.values()
-        #       for m_data in y_data.values()
-        #       for c in m_data if c != '収入' # '収入'を除外
-        # )))
-        # self.all_categories = all_categories  # 全カテゴリを保存 (収入以外)
 
         # 年と月を数値としてソートするためにキーを生成
         def sort_key_month(ym_str):
@@ -404,8 +348,6 @@ class BudgetCarouselApp:
         else:
             categories, actual_values = self.data_by_month[self.current_index]
             label = self.month_labels[self.current_index]
-
-        # categories, actual_values = self.data_by_month[self.current_index]
 
         fig, ax = plt.subplots(figsize=(8, 6))  # グラフサイズを少し大きくして見やすく
 
@@ -612,51 +554,6 @@ class BudgetCarouselApp:
         self.btn_next.config(
             state=tk.NORMAL if self.current_index < data_len - 1 else tk.DISABLED
         )
-
-    # def write_data_to_csv(self):
-    #     if not self.current_filename:
-    #         # ファイルが選択されていない場合のエラー処理
-    #         return
-
-    #     prev_index = self.current_index
-    #     prev_is_circle = self.is_circle
-
-    #     # 入力フィールドからデータを取得
-    #     date = self.entry_date.get()
-    #     price = self.entry_price.get()
-    #     item = self.entry_item.get()
-    #     category = self.entry_category.get()
-    #     notes = self.entry_notes.get()
-
-    #     # データの検証 (例: 空でないか、数値であるか)
-    #     if not all([date, price, item, category]):
-    #         # 必須フィールドが空の場合のエラー処理
-    #         return
-
-    #     try:
-    #         price = int(price)  # 値段を整数に変換
-    #     except ValueError:
-    #         # 値段が数値でない場合のエラー処理
-    #         return
-
-    #     # CSVファイルにデータを追記
-    #     try:
-    #         with open(self.current_filename, 'a', encoding='utf-8', newline='') as f:
-    #             writer = csv.writer(f)
-    #             writer.writerow([date, price, item, category, notes])
-
-    #         # 書き込み成功後の処理 (例: メッセージボックスの表示、グラフの更新)
-
-    #     except Exception as e:
-    #         # ファイル書き込みエラー処理
-    #         print(f"ファイル書き込みエラー: {e}")
-
-    #     self.load_csv(answer=1)  # 書き込み後にデータを再読み込みして更新
-    #     self.current_index = min(prev_index, len(self.data_by_month) - 1)
-    #     self.is_circle = prev_is_circle
-    #     self.draw_graph()
-
-    # --- 予算設定関連のメソッド群 ---
 
     def load_budget_data(self):
         """
